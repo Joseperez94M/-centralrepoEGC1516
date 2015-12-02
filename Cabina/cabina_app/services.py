@@ -60,7 +60,7 @@ def get_encryption_vote(vote):
 def save_vote(encryption_vote, id_poll):
     data = [('vote', encryption_vote), ('votation_id', id_poll)]
     data = urllib.urlencode(data)
-    path = 'http://php-egc.rhcloud.com/vote.php'
+    path = 'http://storage-egc1516.rhcloud.com/vote.php'
     req = urllib2.Request(path, data)
     response = urllib2.urlopen(req)
     response_data = json.load(response)
