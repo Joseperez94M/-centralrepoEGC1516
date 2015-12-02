@@ -3,7 +3,7 @@ import os
 import sys
 
 if __name__ == "__main__":
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "cabina_agora_us.settings")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "cabinatest.settings")
 
     from django.core.management import execute_from_command_line
 
