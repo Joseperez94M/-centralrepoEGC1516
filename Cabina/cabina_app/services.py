@@ -1,14 +1,12 @@
 # encoding: utf-8
-from base64 import b64decode
 import json
 import urllib
 import urllib2
-#from Crypto.PublicKey.RSA import importKey
-
 import requests
-import rsa
+import TokenVerification
 
 from cabina_app.models import User, Poll, Vote
+from main.java import AuthorityImpl, Token
 
 
 def verify_user(request):
@@ -41,17 +39,11 @@ def can_vote(request, id_poll):
     return result
 
 
-###REVISAR###
 def get_encryption_vote(vote):
     json_vote = vote_as_json(vote)
     json_string = str(json_vote)
     try:
-        public_key = get_key_rsa(vote.id_poll)
-        if public_key is not False:
-            None
-            #encrypt_vote = encrypt_rsa(json_string, public_key)
-        else:
-            encrypt_vote = False
+        encrypt_vote = encrypt_rsa(json_string, vote.id_poll)
     except OverflowError:
         encrypt_vote = False
     return encrypt_vote
@@ -148,31 +140,14 @@ def vote_as_json(vote):
     return json.dumps(to_dump_vote)
 
 
-# def encrypt_rsa(message, public_key_loc):
-#     # cifra el mensaje y lo codifica a base64
-#     key_decode = b64decode(public_key_loc)
-#     key_perfect = importKey(key_decode, passphrase=None)
-#     cryptos = rsa.encrypt(message, key_perfect)
-#     crypto = cryptos.encode("base64")
-#     return crypto
-# 
-# 
-# def decrypt_rsa(crypto, private_key):
-#     key_decode = b64decode(private_key)
-#     key_perfect = importKey(key_decode, passphrase=None)
-#     crypto = crypto.decode("base64")
-#     return rsa.decrypt(crypto, key_perfect)
-
-
-def get_key_rsa(id_votacion):
-    web = urllib2.urlopen("http://egc.jeparca.com/getKeys.php?id=" + str(id_votacion))
-    result = False
-    try:
-        keys = json.load(web)
-        public = keys['Publickey']
-        if public is not None and public is not "":
-            result = public
-        return result
-    except ValueError:
-        return False
-
+def encrypt_rsa(message, votationId):
+    # Cifra el mensaje usando el metodo dado por verificacion
+    
+    authority = AuthorityImpl()
+    
+    token = TokenVerification()
+    token = token.calculateToken(votationId)
+    
+    crypto = authority.encrypt(token, message, str(votationId))
+    
+    return crypto
