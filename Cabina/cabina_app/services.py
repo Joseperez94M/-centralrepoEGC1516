@@ -6,7 +6,8 @@ import requests
 import TokenVerification
 
 from cabina_app.models import User, Poll, Vote
-from main.java import AuthorityImpl, Token
+from main.java import AuthorityImpl
+
 
 
 def verify_user(request):
@@ -145,9 +146,8 @@ def encrypt_rsa(message, votationId):
     
     authority = AuthorityImpl()
     
-    token = TokenVerification()
-    token = token.calculateToken(votationId)
-    
+    token = TokenVerification.calculateToken(votationId)
+        
     crypto = authority.encrypt(token, message, str(votationId))
     
     return crypto
