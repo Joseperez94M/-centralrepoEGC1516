@@ -1,0 +1,4 @@
+rojo gordo 	- 	f05f40
+rojo acción 	-	ed431f
+azul gordo	-	4d79ff
+azul acción	-	1a52ff
