@@ -88,7 +88,7 @@ DATABASES = {
 DOJ_BUILDWAR_JAVA_LIBS = [
     os.path.join(BASE_DIR, 'libs', 'jython-standalone-2.7.0.jar'),
     os.path.join(BASE_DIR, 'libs', 'sqlite-jdbc-3.8.10.1.jar'),
-    os.path.join(BASE_DIR, 'libs', 'Verificacion-2.0.2.jar'),
+    os.path.join(BASE_DIR, 'libs', 'Verificacion-2.1.0.jar'),
     os.path.join(BASE_DIR, 'libs', 'Token.jar'),
 ]
 
@@ -113,7 +113,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/cabina_app/static/'
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
