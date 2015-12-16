@@ -1,0 +1,82 @@
+﻿@using Authentication.Models
+@model UserRegisterModel
+@{
+    ViewBag.Title = "Registrarse";
+}
+@*Esta es la vista de registro, aquí se definen todos los campos necesarios así como la distribución de estos.*@
+
+
+<h2>@ViewBag.Title.</h2>
+
+@using (Html.BeginForm("Register", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Cree una cuenta nueva.</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.username, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.username, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.username, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.password, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.password, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.password, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.confirmPassword, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.confirmPassword, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.confirmPassword, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.email, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.email, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.genre, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            <div class="radio">
+                @Html.RadioButtonFor(m => m.genre, "Masculino")
+                @Html.Label("Masculino")
+            </div>
+            <div class="radio">
+                @Html.RadioButtonFor(m => m.genre, "Femenino")
+                @Html.Label("Femenino")
+            </div>
+            @Html.ValidationMessageFor(m => m.genre, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.autonomous_community, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.autonomous_community, Model.Communities, "- Selecciona comunidad autónoma -", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.autonomous_community, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.age, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.age, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.age, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Registrarse" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
