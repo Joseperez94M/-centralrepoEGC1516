@@ -13,11 +13,16 @@ import org.apache.commons.codec.digest.DigestUtils;
 public class AuthorityImpl implements Authority{
 	
 	/**
-	 * Esta funciÛn obtiene las claves p˙blica y privada de la votaciÛn cuyo id es el pasado 
-	 * como par·metro. Resaltar que hacemos uso del proyecto Elliptic_SDK, que  es una librerÌa
-	 * criptogr·fica elÌptica bajo la licensia GPL v3. M·s informaciÛn en la clase CryptoEngine.java
-	 * @param id. Corresponde al id de la votaciÛn
-	 * @return res. Boolean que indica si la operaciÛn ha tenido Èxito.
+	 * Esta funci√≥n obtiene las claves p√∫blica y privada de la votaci√≥n cuyo id es el pasado 
+	 * como par√°metro. Resaltar que hacemos uso del proyecto Elliptic_SDK, que es una librer√≠a
+	 * criptogr√°fica elÔøΩptica bajo la licensia GPL v3. M√°s informaci√≥n en la clase CryptoEngine.java.
+	 * Se crean las claves mediante el mÔøΩtodo generateKeyPair() de la clase CryptoEngine.
+	 * La clave p√∫blica es de la forma xxxxxxx++++yyyyyyy, siendo el + un separador.
+	 * Se cifra en base64 solo la clave p√∫blica y se guarda la clave p√∫blica y privada en la base de
+	 * datos. Finalmente se comprueba que se haya guardado correctamente.
+	 * @param id. Corresponde al id de la votaci√≥n
+	 * @param token. Corresponde al token que se comprobar√° si es el adecuado para seguir la operaci√≥n.
+	 * @return res. Boolean que indica si la operaci√≥n ha tenido √©xito.
 	 */
 	public boolean postKey(String id, Integer token) {
 		boolean res;
@@ -37,12 +42,11 @@ public class AuthorityImpl implements Authority{
 				secretKey = cryptoEngine.getKeyPair().getSecretKey();
 				publicKey = cryptoEngine.getKeyPair().getPublicKey().getX()+"++++"+cryptoEngine.getKeyPair().getPublicKey().getY();
 				
-				//encodedPublicKey = DatatypeConverter.printBase64Binary(publicKey.getBytes());
 				encodedPublicKey = new String(Base64.encodeBase64(publicKey.getBytes()));
 				
 				RemoteDataBaseManager rdbm=new RemoteDataBaseManager();
-				 //Llamamos a la funciÛn que se encarga de guardar el par de claves asociadas
-				 // a la votaciÛn cuya id se especifica como par·metro.
+				 //Llamamos a la funci√≥n que se encarga de guardar el par de claves asociadas
+				 // a la votaci√≥n cuya id se especifica como par√°metro.
 
 				if (rdbm.postKeys(id, encodedPublicKey, secretKey.toString())){
 					res = true;
@@ -52,7 +56,6 @@ public class AuthorityImpl implements Authority{
 				e.printStackTrace();
 			}
 		}else{
-//			System.out.println("El token no coincide");
 			throw new VerificationException("El token no coincide");
 		}
 		
@@ -65,10 +68,9 @@ public class AuthorityImpl implements Authority{
 		
 		if(Token.checkTokenDb(new Integer(id), token)){
 			RemoteDataBaseManager rdbm=new RemoteDataBaseManager();
-			//Llamamos a la funciÛn que conecta con la base de datos remota y obtiene la clave p˙blica.
+			//Llamamos a la funci√≥n que conecta con la base de datos remota y obtiene la clave p√∫blica.
 			result = rdbm.getPublicKey(id);
 		}else{
-//			System.out.println("El token no coincide en getPublicKey");
 			throw new VerificationException("El token no coincide en getPublicKey");
 		}
 		
@@ -82,10 +84,9 @@ public class AuthorityImpl implements Authority{
 		
 		if(Token.checkTokenDb(new Integer(id), token)){
 			RemoteDataBaseManager rdbm=new RemoteDataBaseManager();
-			//Llamamos a la funciÛn que conecta con la base de datos remota y obtiene la clave privada.
+			//Llamamos a la funci√≥n que conecta con la base de datos remota y obtiene la clave privada.
 			result = rdbm.getSecretKey(id);
 		}else{
-//			System.out.println("El token no coincide en getPrivateKey");
 			throw new VerificationException("El token no coincide en getPrivateKey");
 		}		
 		
@@ -108,7 +109,7 @@ public class AuthorityImpl implements Authority{
 			}
 		
 		}catch(Exception e){
-			
+			throw new VerificationException("El voto ha sido modificado durante la votaciÔøΩn");
 		}
 		
 		return res;
@@ -128,10 +129,10 @@ public class AuthorityImpl implements Authority{
 		if(Token.checkTokenDb(new Integer(idVote), token)){
 			String[] cutText = cutVote(textToEncypt);
 			
-			//obtengo la clave publica con getKey y separa esto en x e y (que es la mitad y hacer un new PointGMP) acordarse de que  
-			//en la bd se guarda en base64
+			//Obtengo la clave p√∫blica con getKey y separa esto en x e y (que es la mitad y hacer un new PointGMP). Acordarse de que  
+			//en la base de datos se guarda en base64
 			publicKeyBD = getPublicKey(idVote, token);
-			//byte[] keyDecoded = Base64.getDecoder().decode(publicKeyBD.getBytes());
+
 			byte[] keyDecoded = Base64.decodeBase64(publicKeyBD.getBytes());
 			publicKeyBD = new String(keyDecoded);
 					
@@ -149,7 +150,7 @@ public class AuthorityImpl implements Authority{
 				int to = encriptAux.length();
 				encriptAux = encriptAux.substring(from + 4,to);	
 
-				//tamaÒo de encriptAux = 77
+				//Tama√±o de encriptAux = 77
 				if(!encryptText.equals("")){
 					encryptText = encryptText + "|" + encriptAux;
 				}else{
@@ -157,16 +158,15 @@ public class AuthorityImpl implements Authority{
 				}
 					
 			}
-			//quito los espacios delanteros y traseros
+			//Quito los espacios delanteros y traseros
 			encryptText = encryptText.trim();
 			
 			text = stringToSHA1(textToEncypt)+ "?" + encryptText;
 			
-			//convierto a byte[]
+			//Convierto a byte[]
 			result = text.getBytes();
 
 		}else{
-			//System.out.println("El token no coincide en encriptar");
 			throw new VerificationException("El token no coincide en encriptar");
 		}
 				
@@ -188,7 +188,6 @@ public class AuthorityImpl implements Authority{
 			secretKey = getPrivateKey(idVote, token);
 			
 			publicKey = getPublicKey(idVote, token);
-			//byte[] keyDecoded2 = Base64.getDecoder().decode(publicKey.getBytes());
 			byte[] keyDecoded2 = Base64.decodeBase64(publicKey.getBytes());
 			publicKey = new String(keyDecoded2);
 			
@@ -215,15 +214,19 @@ public class AuthorityImpl implements Authority{
 			}
 
 		}else{
-//			System.out.println("El token no coincide en desencriptar");
 			throw new VerificationException("El token no coincide en desencriptar");
 		}
 				
 		return result;
 	}
 
-	@Override
-	public String[] cutVote(String votoEnClaro) {
+	/**
+	 * Esta funci√≥n corta un voto en claro en partes de longitud 31 para que el m√©todo de cifrar
+	 * funcione correctamente.
+	 * @param votoEnClaro. String que representa el voto en claro para cortar.
+	 * @return result. String[] que indica los distintos trozos en los que ha sido cortado el voto en claro.
+	 */
+	private String[] cutVote(String votoEnClaro) {
 		
 		//Intervalo de corte del string 
 		int intervalo;		
@@ -239,14 +242,20 @@ public class AuthorityImpl implements Authority{
 	    for (int i = 0; i < lastIndex; i++) {
 	        result[i] = votoEnClaro.substring(j, j + intervalo);
 	        j += intervalo;
-	    } //AÒado el ultimo bloque
+	    } //A√±ado el √∫ltimo bloque
 	    result[lastIndex] = votoEnClaro.substring(j);
 
 	    return result;
 	}
 	
-	@Override
-	public String[] cutCifVote(String votoCifrado) {
+	/**
+	 * Esta funci√≥n corta un voto cifrado en partes situadas entre el s√≠mbolo "|", de esa forma en el
+	 * m√©todo decrypt descifrar√° las distintas partes cifradas que han resultado de cifrar los trozos
+	 * que devuelve el m√©todo cutVote.
+	 * @param votoCifrado. String que representa el voto cifrado para cortar.
+	 * @return result. String[] que indica los distintos trozos en los que ha sido cortado el voto cifrado.
+	 */
+	private String[] cutCifVote(String votoCifrado) {
 		
 		List<String>  res = new ArrayList<String>();
 		List<Integer> indices = new ArrayList<Integer>();
