@@ -32,22 +32,24 @@ public class Algoritmo {
 		Integer numericSurveyId;
 		AuthorityImpl auth;
 		List<Voto> votes;
+		boolean checkVote;
 
 		// Second, the variables are initialized
 		numericSurveyId = Integer.valueOf(votationId);
 		token = Token.calculateToken(numericSurveyId);
 		auth = new AuthorityImpl();
 		votes = new ArrayList<Voto>();
+		
 
 		// Third,
 		for (byte[] s : votos) {
 
 			// bytesDecode = decoder.decodeBuffer(s);
-
-			if (auth.checkVote(s, votationId, token)) {
+			checkVote = auth.checkVote(s, votationId, token);
+			if (checkVote) {
 				String res = null;
 				res = auth.decrypt(votationId, s, token);
-
+				
 				// Voto voto = mapper.readValue(res,new
 				// TypeReference<Voto>() {});
 

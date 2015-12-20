@@ -10,17 +10,10 @@ public class Token {
 	
 	
 	/**
-	 * Esta función hace el cálculo del Token necesario para el acceso al subsistema
-	 * de verificación. Este token es el que se almacenará en la base de datos
-	 * posteriormente. Este token se calcula de la siguiente forma:
-	 * 1 - El id de la votación pasa a binario.
-	 * 2 - Recorremos el número binario y multiplicamos del final hacia el 
-	 *     principio con el índice correspondiente de la lista de números
-	 *     estática.
-	 * 3 - Vamos sumando el resultado de la multiplicación a lo que ya tuvieramos.
-	 * 4 - Finalmente, multiplicamos por dos primos para aumentar el tamaño.
-	 * @param votationId. Corresponde al id de la votación.
-	 * @return token. Número entero que corresponde con el token generado.
+	 * The following method calculates a Token to verify the access to
+	 * the data stored in Verification subsystem's database
+	 * @param votationId
+	 * @return token
 	 */
 	public static Integer calculateToken(Integer votationId){
 		
@@ -47,8 +40,8 @@ public class Token {
 	}
 
 	/**
-	 * Comprueba que el id de la votación es menor a un número de 9 cifras.
-	 * @param votationId. Corresponde al id de la votación.
+	 * Checks the votation id is lower than a 10 cipher number.
+	 * @param votationId. 
 	 */
 	private static void checkId(Integer votationId) {
 		assert votationId <= 999999998;

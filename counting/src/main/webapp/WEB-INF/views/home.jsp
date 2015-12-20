@@ -22,7 +22,13 @@ los votos obtenidos </P>
 
 API REST del subsistema: 
 <p>* / --> Welcome del proyecto</p>
-<p>* /count/predefined --> Test de funcionamiento</p> 
-<p>* /count/natural?votationId=* --> Recuento natural</p>
+<p>* /count/predefined --> Test de funcionamiento de una votacion</p> 
+<p>* /count/referendum?pollId=* --> Recuento natural. Opcionalmente
+se le puede añadir el parámetro cod, dependiendo de la codificacion de
+los votos obtenidos. Por ejemplo: 
+<br> * /count/referendum?pollId=1&cod=special --> si se esperan recibir los
+votos como array de bytes 
+<br> * /count/referendum?pollId=2&cod=normal --> si se esperan recibir
+los votos como un hash cadena cifrado</p>
 </body>
 </html>

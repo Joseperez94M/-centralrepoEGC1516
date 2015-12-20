@@ -21,7 +21,7 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {
 		
-		logger.info("Ejecuci�n de m�todo welcome en curso.");
+		logger.info("Welcome page execution in process");
 		
 		return "home";
 	}
