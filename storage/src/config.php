@@ -2,7 +2,7 @@
 
 $servername = "localhost";
 $username = "root";
-$password = "albrojfer1";
+$password = "egc1516";
 $dbname = "storage";
 
 ?>

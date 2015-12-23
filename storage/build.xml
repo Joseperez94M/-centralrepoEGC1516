@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<project name="storage" default="build">
+  <property name="project_name" value="egc-storage" />
+  <property name="version" value="1.2" />
+  <property name="srcdir" value="./src/" />
+  <property name="builddir" value="./build/" />
+  
+  <fileset dir="${srcdir}" id="srcfiles">
+   <include name="*.*" />
+  	<include name="**/*.*" />
+  </fileset>
+ 
+  <fileset dir="${srcdir}" id="phpfiles">
+    <include name="*.php" />
+    <include name="**/*.php" />
+  </fileset>  
+
+  <target name="main">
+     <phingcall target="test" />
+  </target>
+ 
+  <target name="compile">
+    <phplint>
+      <fileset refid="phpfiles" />
+    </phplint>
+  </target>
+ 
+  <target name="test" depends="compile">
+  	<phpunit printsummary="true" haltonfailure="true" pharlocation="/usr/local/bin/phpunit">
+  		<batchtest>
+  			<fileset dir="./tests">
+  				<include name="*Test.php" />
+  			</fileset>
+  		</batchtest>
+  	</phpunit>
+  </target>
+
+  <target name="build" depends="test">
+  	<mkdir dir="${builddir}" />
+  	<zip destfile="${builddir}/${project_name}-${version}.zip" basedir="${srcdir}" />
+  </target>
+ 
+   <target name="clear">
+   	<available file="${builddir}" type="dir" property="dir.Exists" />
+        <if>
+            <isset property="dir.Exists"/>
+                <then>
+                	<delete dir="${builddir}" />
+                </then> 
+        </if>
+  </target>
+ 
+ 
+</project>

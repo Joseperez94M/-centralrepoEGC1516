@@ -102,28 +102,31 @@
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="service-box">
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 text-center">
+                
+                <div class="col-md-4 text-center">
                     <div class="service-box">
                         <i class="fa fa-4x fa-paper-plane wow bounceIn text-primary" data-wow-delay=".1s"></i>
                         <h3>Manda tu voto</h3>
                         <p class="text-muted">Con nuestro sistema podr&aacute;s enviar un voto para que se almacene en la base de datos.</p>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 text-center">
+                 
+                 <div class="col-md-4 text-center">
+                    <div class="service-box">
+                        <a href="../src/estadisticas.php"><i class="fa fa-4x fa-pie-chart wow bounceIn text-primary" data-wow-delay=".1s"></i></a>
+                        <h3>Estadísticas</h3>
+                        <p class="text-muted">A trav&eacute;s de <a href="../src/estadisticas.php">&eacute;ste</a> enlace podr&aacute; observar las estad&iacute;sticas de votos totales por cada tipo de votaci&oacute;n realizada.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 text-center">
                     <div class="service-box">
                         <i class="fa fa-4x fa-newspaper-o wow bounceIn text-primary" data-wow-delay=".2s"></i>
                         <h3>Consulta una votaci&oacute;n</h3>
                         <p class="text-muted">Haz una petici&oacute;n de la lista completa de los votos cifrados de una determinada votaci&oacute;n.</p>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="service-box">
-                    </div>
-                </div>
+                
             </div>
         </div>
     <br/>
@@ -132,49 +135,56 @@
     <div class="container">
         <div class="row">
             <table style="border-collapse:collapse" class="wikitable sortable">
-<tr>
-<th> M&eacute;todo (URL)
-</th>
-<th> Tipo
-</th>
-<th> Descripci&oacute;n
-</th>
-<th> Par&aacute;metros
-</th>
-<th> Respuesta
-</th>
-<th> Ejemplo
-</th></tr>
-<tr>
-<td> vote (<a rel="nofollow" class="external free" href="http://storage-egc1516.rhcloud.com/vote.php">http://storage-egc1516.rhcloud.com/vote.php</a>)
-</td>
-<td> POST
-</td>
-<td> Permite almacenar un voto para una determinada votaci&oacute;n
-</td>
-<td>
-vote: voto codificado 
-<br/>
-votation_id: id de la votaci&oacute;n
-</td>
-<td> Json con un mensaje de respuesta que indica si la operaci&oacute;n se ha resuelto correctamente. (el mensaje ser&aacute; 1 si todo sali&oacute; bien y 0 en caso contrario)
-</td>
-<td> (<a rel="nofollow" class="external free" href="http://storage-egc1516.rhcloud.com/vote.php">http://storage-egc1516.rhcloud.com/vote.php</a>) Y con RESTClient ponemos: {"vote":"VotoPrueba","votation_id":"2"}
-</td></tr>
-<tr>
-<td> get_votes (<a rel="nofollow" class="external free" href="http://storage-egc1516.rhcloud.com/get_votes.php">http://storage-egc1516.rhcloud.com/get_votes.php</a>)
-</td>
-<td> GET
-</td>
-<td> Devuelve la lista de votos de una determinada votaci&oacute;n
-</td>
-<td>
-votation_id: id de la votaci&oacute;n.
-</td>
-<td> Json con la lista de votos y un campo "msg" que indica si la operaci&oacute;n se realiz&oacute; correctamente.
-</td>
-<td> (<a rel="nofollow" class="external free" href="http://storage-egc1516.rhcloud.com/get_votes.php?votation_id=1">http://storage-egc1516.rhcloud.com/get_votes.php?votation_id=1</a>)
-</td></tr></table>
+				<tr>
+					<th> M&eacute;todo (URL)</th>
+					<th> Tipo				</th>
+					<th> Descripci&oacute;n </th>
+					<th> Par&aacute;metros  </th>
+					<th> Respuesta			</th>
+					<th> Ejemplo			</th>
+				</tr>
+				<tr>
+					<td> 
+						vote (<a rel="nofollow" class="external free" href="http://storage-egc1516.rhcloud.com/vote.php">http://storage-egc1516.rhcloud.com/vote.php</a>)
+					</td>
+					<td> 
+						POST
+					</td>
+					<td> 
+						Permite almacenar un voto para una determinada votaci&oacute;n
+					</td>
+					<td>
+						vote: voto codificado <br/>
+						votation_id: id de la votaci&oacute;n
+					</td>
+					<td> 
+						Json con un mensaje de respuesta que indica si la operaci&oacute;n se ha resuelto correctamente. (el mensaje ser&aacute; 1 si todo sali&oacute; bien y 0 en caso contrario)
+					</td>
+					<td> 
+						(<a rel="nofollow" class="external free" href="http://storage-egc1516.rhcloud.com/vote.php">http://storage-egc1516.rhcloud.com/vote.php</a>) Y con RESTClient ponemos: {"vote":"VotoPrueba","votation_id":"2"}
+					</td>
+				</tr>
+				<tr>
+					<td> 
+						get_votes (<a rel="nofollow" class="external free" href="http://storage-egc1516.rhcloud.com/get_votes.php">http://storage-egc1516.rhcloud.com/get_votes.php</a>)
+					</td>
+					<td> 
+						GET
+					</td>
+					<td> 
+						Devuelve la lista de votos de una determinada votaci&oacute;n
+					</td>
+					<td>
+						votation_id: id de la votaci&oacute;n.
+					</td>
+					<td> 
+						Json con la lista de votos y un campo "msg" que indica si la operaci&oacute;n se realiz&oacute; correctamente.
+					</td>
+					<td> 
+						(<a rel="nofollow" class="external free" href="http://storage-egc1516.rhcloud.com/get_votes.php?votation_id=1">http://storage-egc1516.rhcloud.com/get_votes.php?votation_id=1</a>)
+					</td>
+				</tr>
+			</table>
         </div>
     </div>
 
