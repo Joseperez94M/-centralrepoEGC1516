@@ -88,7 +88,7 @@ DATABASES = {
 DOJ_BUILDWAR_JAVA_LIBS = [
     os.path.join(BASE_DIR, 'libs', 'jython-standalone-2.7.0.jar'),
     os.path.join(BASE_DIR, 'libs', 'sqlite-jdbc-3.8.10.1.jar'),
-    os.path.join(BASE_DIR, 'libs', 'Verificacion-2.1.0.jar'),
+    os.path.join(BASE_DIR, 'libs', 'Verificacion-2.1.2.jar'),
     os.path.join(BASE_DIR, 'libs', 'Token.jar'),
 ]
 
