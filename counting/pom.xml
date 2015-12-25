@@ -6,7 +6,7 @@
 	<artifactId>counting</artifactId>
 	<name>Counting</name>
 	<packaging>war</packaging>
-	<version>1.4.0.RELEASE</version>
+	<version>2.1.0.RELEASE</version>
 	<properties>
 		<java-version>1.7</java-version>
 		<org.springframework-version>4.2.3.RELEASE</org.springframework-version>
@@ -105,8 +105,6 @@
 			<version>2.6.3</version>
 		</dependency>
 
-		<!-- Libreria verificacion -->
-
 		<!-- Servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -134,6 +132,7 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Libreria verificacion -->
 		<dependency>
 			<groupId>EGC</groupId>
 			<artifactId>Verificacion</artifactId>

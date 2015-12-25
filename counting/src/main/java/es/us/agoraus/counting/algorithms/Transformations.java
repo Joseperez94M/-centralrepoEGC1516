@@ -68,7 +68,7 @@ public class Transformations {
 		AuthorityImpl auth;
 		auth = new AuthorityImpl();
 		
-		/*
+		
 		// Generates a token for security reasons
 		Integer token;
 		token = Token.calculateToken(1);
@@ -106,7 +106,7 @@ public class Transformations {
 			}
 			System.out.println("--------- Next element --------");
 		}
-		 */
+		
 		Integer token2;
 		token2 = Token.calculateToken(2);
 			

@@ -2,7 +2,7 @@ package es.us.agoraus.counting.domain;
 
 import java.util.List;
 
-public class VotosCifrados {
+public class EncryptedVotes {
 
 	private Integer msg;
 	private List<String> votes;

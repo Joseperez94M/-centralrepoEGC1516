@@ -2,7 +2,7 @@ package es.us.agoraus.counting.domain;
 
 import java.util.List;
 
-public class Voto {
+public class Vote {
 
 	private String age;
 	private List<Answer> answers;
