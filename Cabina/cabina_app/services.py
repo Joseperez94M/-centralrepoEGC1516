@@ -2,42 +2,44 @@
 import json
 import urllib
 import urllib2
-import requests
-import TokenVerification
 
-from cabina_app.models import User, Poll, Vote
+import requests
+
+from main.java import TokenVerification
+from cabina_app.models import User, Poll, Vote, Question
 from main.java import AuthorityImpl
 
 
-
 def verify_user(request):
-    try:
-        user = request.COOKIES.get('user')
-        token = request.COOKIES.get('token')
-        r = requests.get("http://auth-egc.azurewebsites.net/api/checkTokenUser?user=" + str(user) + "&token=" + str(token))
-        json_autenticacion = r.json()
-        result = False
-        if json_autenticacion['valid'] is True:
-            result = True
-    except ValueError:
-        result = False
-    return result
+#     try:
+#         user = request.COOKIES.get('user')
+#         token = request.COOKIES.get('token')
+#         r = requests.get("http://auth-egc.azurewebsites.net/api/checkTokenUser?user=" + str(user) + "&token=" + str(token))
+#         json_autenticacion = r.json()
+#         result = False
+#         if json_autenticacion['valid'] is True:
+#             result = True
+#     except ValueError:
+#         result = False
+#     return result
+    return True
 
 
 def can_vote(request, id_poll):
-    try:
-        user = request.COOKIES.get('user')
-        token = request.COOKIES.get('token')
-        cookies = dict(user=user, token=token)
-        r = requests.get("http://localhost:8080/ADMCensus/census/canVote.do?idVotacion=" + str(id_poll),
-                         cookies=cookies)
-        json_censo = r.json()
-        result = False
-        if json_censo['result'] == "yes":
-            result = True
-    except ValueError:
-        result = False
-    return result
+#     try:
+#         user = request.COOKIES.get('user')
+#         token = request.COOKIES.get('token')
+#         cookies = dict(user=user, token=token)
+#         r = requests.get("http://localhost:8080/ADMCensus/census/canVote.do?idVotacion=" + str(id_poll),
+#                          cookies=cookies)
+#         json_censo = r.json()
+#         result = False
+#         if json_censo['result'] == "yes":
+#             result = True
+#     except ValueError:
+#         result = False
+#     return result
+    return True
 
 
 def get_encryption_vote(vote):
@@ -51,23 +53,26 @@ def get_encryption_vote(vote):
 
 
 def save_vote(encryption_vote, id_poll):
-    data = [('vote', encryption_vote), ('votation_id', id_poll)]
-    data = urllib.urlencode(data)
-    path = 'http://storage-egc1516.rhcloud.com/vote.php'
-    req = urllib2.Request(path, data)
-    response = urllib2.urlopen(req)
-    response_data = json.load(response)
     result = False
+    
+    path = 'http://storage-egc1516.rhcloud.com/vote.php'
+    json_vote = encryption_vote.tostring()
+    payload={"vote":json_vote,"votation_id":str(id_poll)}
+    headers={'content-type':'application/json'}
+    r = requests.post(path, data=json.dumps(payload), headers=headers)
+    
+    response_data = json.loads(r.text)
+    
     if response_data['msg'] == u'1':
         result = True
     return result
 
-
 def get_poll(id_poll):
     try:
-        r = requests.get('http://localhost:8080/CreacionAdminVotaciones/vote/survey.do?id=' + str(id_poll))
+        r = requests.get('http://egc.jeparca.com/json_poll.php')
         json_poll = json.dumps(r.json())
         poll = json.loads(json_poll, object_hook=json_as_poll)
+
     except ValueError:
         poll = None
     return poll
@@ -75,8 +80,8 @@ def get_poll(id_poll):
 
 def get_user(request):
     try:
-        username = request.COOKIES.get('user')
-        r = requests.get("http://auth-egc.azurewebsites.net/api/getUser?user=" + username)
+        username = "test1"
+        r = requests.get("http://auth-egc.azurewebsites.net/api/getUser?username=" + username)
         json_auth = json.dumps(r.json())
         user = json.loads(json_auth, object_hook=json_as_user)
     except ValueError:
@@ -94,27 +99,28 @@ def get_vote(poll, user, post_data):
     vote = Vote()
     vote.id = 1
     vote.id_poll = poll.id
-    vote.age = user.age
-    vote.genre = user.genre
-    vote.autonomous_community = user.autonomous_community
+    vote.age = user.Age
+    vote.genre = user.Genre
+    vote.autonomous_community = user.Autonomous_community
     vote.answers = answers
     return vote
 
 
 def update_user(request, id_poll):
-    try:
-        user = request.COOKIES.get('user')
-        token = request.COOKIES.get('token')
-        cookies = dict(user=user, token=token)
-        r = requests.get("http://localhost:8080/ADMCensus/census/updateUser.do?idVotacion=" + str(id_poll),
-                         cookies=cookies)
-        json_censo = r.json()
-        result = False
-        if json_censo['result'] == "yes":
-            result = True
-    except ValueError:
-        result = False
-    return result
+#     try:
+#         user = request.COOKIES.get('user')
+#         token = request.COOKIES.get('token')
+#         cookies = dict(user=user, token=token)
+#         r = requests.get("http://localhost:8080/ADMCensus/census/updateUser.do?idVotacion=" + str(id_poll),
+#                          cookies=cookies)
+#         json_censo = r.json()
+#         result = False
+#         if json_censo['result'] == "yes":
+#             result = True
+#     except ValueError:
+#         result = False
+#     return result
+    return True
 
 
 def json_as_poll(json_poll):
@@ -122,6 +128,10 @@ def json_as_poll(json_poll):
     poll.__dict__.update(json_poll)
     return poll
 
+def json_as_question(json_question):
+    question = Question()
+    question.__dict__.update(json_question)
+    return question
 
 def json_as_user(json_auth):
     user = User()
@@ -148,6 +158,6 @@ def encrypt_rsa(message, votationId):
     
     token = TokenVerification.calculateToken(votationId)
         
-    crypto = authority.encrypt(token, message, str(votationId))
+    crypto = authority.encrypt(str(votationId), message, token)
     
     return crypto
