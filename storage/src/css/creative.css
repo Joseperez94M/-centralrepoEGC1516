@@ -42,6 +42,22 @@ table {
  	background-color: #00BFFF;
 }		 
 
+#loginStyle{
+	background-color: #4D79FF;
+	padding: 3% 3% 3% 3%;
+	color: white;
+	border-radius: 5px;
+}
+
+#styleHeadEstadisticas{
+	text-align: left;
+	color: #4D79FF;
+	font-family: "Open Sans","Helvetica Neue",Arial,sans-serif;
+	font-size: 20px;
+	font-size:14px;
+	font-weight: 700;
+	float:left;
+}
 th {
     padding-right: 10px;
 }
