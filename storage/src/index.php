@@ -236,6 +236,26 @@ $returnUrl= "http://localhost/egc/src/"
 						(<a rel="nofollow" class="external free" href="http://storage-egc1516.rhcloud.com/get_votes.php?votation_id=1">http://storage-egc1516.rhcloud.com/get_votes.php?votation_id=1</a>)
 					</td>
 				</tr>
+				<tr>
+					<td> 
+						get_votations (<a rel="nofollow" class="external free" href="http://storage-egc1516.rhcloud.com/get_votations.php">http://storage-egc1516.rhcloud.com/get_votations.php</a>)
+					</td>
+					<td> 
+						GET
+					</td>
+					<td> 
+						Devuelve los ID de todas las votaciones con al menos un voto.
+					</td>
+					<td>
+						Sin par&aacute;metros.
+					</td>
+					<td> 
+						Json con la lista de IDs de las votaciones y un campo "msg" que indica si la operaci&oacute;n se realiz&oacute; correctamente.
+					</td>
+					<td> 
+						(<a rel="nofollow" class="external free" href="http://storage-egc1516.rhcloud.com/get_votations.php">http://storage-egc1516.rhcloud.com/get_votations.php</a>)
+					</td>
+				</tr>
 			</table>
         </div>
     </div>

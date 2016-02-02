@@ -1,3 +1,18 @@
+<?php 
+
+include 'services/securityStatics.php';
+
+$isLoguedAsNotAdmin = false;
+
+if(!$isLoguedAsNotAdmin){
+	$isLoguedAsNotAdmin = isLoguedAsNotAdmin();
+}
+if($isLoguedAsNotAdmin){
+	echo "Usuario no administrador.";
+	exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
