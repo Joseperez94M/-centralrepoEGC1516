@@ -12,6 +12,15 @@ class APITest extends PHPUnit_Framework_TestCase{
 		$this->assertEquals(count($votes),2);
 	}
 	
+	// Get votations
+	public function testGetVotations(){
+		$url = 'http://localhost/egc/src/get_votations.php';
+		$string = file_get_contents($url);
+		$data = json_decode($string,true);
+		$votations = $data["votations"];
+		$this->assertEquals(count($votations),1);
+	}
+	
 	// Vote
 	public function testVote(){	
 		$jsondata['vote'] = 'VotoPruebaTest';
