@@ -5,11 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import es.us.agoraus.counting.domain.Answer;
-import es.us.agoraus.counting.domain.PartialSegmentResult;
-import es.us.agoraus.counting.domain.Result;
-import es.us.agoraus.counting.domain.SegmentedResult;
-import es.us.agoraus.counting.domain.Vote;
+import es.us.agoraus.counting.dto.Answer;
+import es.us.agoraus.counting.dto.PartialSegmentResult;
+import es.us.agoraus.counting.dto.AlgorithmResult;
+import es.us.agoraus.counting.dto.SegmentedResult;
+import es.us.agoraus.counting.dto.Vote;
 
 public class SegmentationAlgorithm extends BaseAlgorithm {
 
@@ -20,13 +20,13 @@ public class SegmentationAlgorithm extends BaseAlgorithm {
 	}
 
 	@Override
-	protected List<Result> countingLogic(final List<Vote> votes) {
-		final List<Result> result = new ArrayList<Result>();
-		final Map<String, Result> questionsKeys = new HashMap<String, Result>();
+	protected List<AlgorithmResult> countingLogic(final List<Vote> votes) {
+		final List<AlgorithmResult> result = new ArrayList<AlgorithmResult>();
+		final Map<String, AlgorithmResult> questionsKeys = new HashMap<String, AlgorithmResult>();
 		PartialSegmentResult partialRes;
 		for (Vote v : votes) {
 			for (Answer a : v.getAnswers()) {
-				final String answer = a.getAnswer_question();
+				final String answer = a.getAnswer();
 				final String question = a.getQuestion();
 				final String segment = getSegment(v);
 				if (!questionsKeys.keySet().contains(question)) {
@@ -36,10 +36,10 @@ public class SegmentationAlgorithm extends BaseAlgorithm {
 					partialRes = segRes.addSegment(segment);
 					incrementCount(answer, partialRes);
 				} else {
-					final Result r = questionsKeys.get(question);
+					final AlgorithmResult r = questionsKeys.get(question);
 					partialRes = ((SegmentedResult) r).getSegments().get(segment);
 					if (partialRes == null) {
-						partialRes = ((SegmentedResult) result).addSegment(segment);
+						partialRes = ((SegmentedResult) r).addSegment(segment);
 					}
 					incrementCount(answer, partialRes);
 				}
@@ -56,14 +56,6 @@ public class SegmentationAlgorithm extends BaseAlgorithm {
 		this.criteria = criteria;
 	}
 
-	private void incrementCount(final String answer, final PartialSegmentResult partialRes) {
-		if ("SI".equals(answer)) {
-			partialRes.setYes(partialRes.getYes() + 1);
-		} else if (("NO".equals(answer))) {
-			partialRes.setNo(partialRes.getNo() + 1);
-		}
-	}
-
 	private String getSegment(final Vote vote) {
 		String result = null;
 		switch (criteria) {
@@ -71,10 +63,10 @@ public class SegmentationAlgorithm extends BaseAlgorithm {
 			result = vote.getAge();
 			break;
 		case gender:
-			result = vote.getGenre();
+			result = vote.getGender();
 			break;
 		case aut_com:
-			result = vote.getAutonomous_community();
+			result = vote.getAutonomousCommunity();
 		}
 		return result;
 	}

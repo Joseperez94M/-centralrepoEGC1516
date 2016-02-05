@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
 <html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <head>
 <title>Charts</title>
 <script type="text/javascript"
@@ -34,9 +35,11 @@
 </head>
 <body>
 
+	<c:if test="${empty data}">No se ha emitido ningún voto todavía.</c:if>
+
 	<c:forEach var="question" items="${data}" varStatus="loopCounter1">
 		<c:forEach var="segment" items="${question.segments}" varStatus="loopCounter2">
-			<div id="piechart${loopCounter1.count}${loopCounter2.count}" style="width: 900px; height: 500px;"></div>
+			<div id="piechart${loopCounter1.count}${loopCounter2.count}" style="width: 700px; height: 300px;"></div>
 		</c:forEach>
 	</c:forEach>
 

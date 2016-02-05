@@ -40,7 +40,7 @@ public class Token {
 	}
 
 	/**
-	 * Checks the votation id is lower than a 10 cipher number.
+	 * Checks the poll id is lower than a 10 cipher number.
 	 * @param votationId. 
 	 */
 	private static void checkId(Integer votationId) {

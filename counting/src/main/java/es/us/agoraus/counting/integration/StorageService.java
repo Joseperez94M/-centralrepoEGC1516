@@ -1,6 +1,6 @@
 package es.us.agoraus.counting.integration;
 
-import es.us.agoraus.counting.domain.EncryptedVotes;
+import es.us.agoraus.counting.dto.EncryptedVotes;
 import retrofit.Call;
 import retrofit.http.GET;
 import retrofit.http.Query;
