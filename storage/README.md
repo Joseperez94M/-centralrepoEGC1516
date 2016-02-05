@@ -4,3 +4,9 @@ Repositorio del módulo de almacenamiento de votos correspondiente al proyecto A
 # Documentación
 Toda la documentación de la aplicación, junto a toda la información del equipo de trabajo puede encontrarse encontrarse en 
 https://1984.lsi.us.es/wiki-egc/index.php/Almacenamiento_de_votos_Grupo_2_%28Curso_2015-2016%29
+
+# Dependencias
+PHP 5.6
+PHPUnit 5.1.2
+Phing 2.13.0
+Mysql 5.5.46

@@ -1,0 +1,7 @@
+# Aptana files
+##############
+.project
+.settings/
+
+# Excluir carpeta build de Phing
+build/
