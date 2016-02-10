@@ -64,6 +64,8 @@
 		<security:intercept-url pattern="/customer/login.do" access="permitAll" /> 
 		<security:intercept-url pattern="/customer/login2.do" access="permitAll" /> 
 		
+		<security:intercept-url pattern="/comment/customer/**" access="permitAll" /> 
+		
 		<security:intercept-url pattern="/customer/loginMake.do" access="permitAll" /> 
 		<security:intercept-url pattern="/customer/loginFromCensusForm.do" access="permitAll" /> 
 		<security:intercept-url pattern="/customer/loginFromCensus.do" access="permitAll" /> 

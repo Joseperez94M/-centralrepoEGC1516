@@ -1,4 +1,3 @@
-
 package domain;
 import java.util.Collection;
 import java.util.Date;
@@ -15,25 +14,46 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.test.annotation.Timed;
+
 @Entity
 @Access(AccessType.PROPERTY)
-public class Hilo extends DomainEntity{
+public class Thread extends DomainEntity{
 	
-	
-	
+	//Atributtes
 	private String title;
 	private Date creationMoment;
 	private String text;
+	private int censusId;
 	
+	//Constructor
+	public Thread(){
+		super();
+	}
 	
+
+	//RelationShips
+	private Administrator administrator;
+	private Collection<Comment> comments;
+	
+	//Getters and Setters
 	@NotBlank
 	@SafeHtml
 	public String getTitle() {
 		return title;
 	}
+	
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	
+	//siempre recibe un numero para saber a que censo corresponde, 
+	//en caso de ser censo abierto recibe un 0
+	@NotNull
+	public int getCensusId() {
+		return censusId;
+	}
+	public void setCensusId(int censusId) {
+		this.censusId = censusId;
 	}
 	
 	@NotNull
@@ -42,6 +62,7 @@ public class Hilo extends DomainEntity{
 	public Date getCreationMoment() {
 		return creationMoment;
 	}
+	
 	public void setCreationMoment(Date creationMoment) {
 		this.creationMoment = creationMoment;
 	}
@@ -51,32 +72,28 @@ public class Hilo extends DomainEntity{
 	public String getText() {
 		return text;
 	}
+	
 	public void setText(String text) {
 		this.text = text;
 	}
 	
-	//relationShips
-	
-	private User user;
-	private Collection<Comment> comments;
-	
 	@NotNull
 	@ManyToOne(optional=false)
-	public User getUser() {
-		return user;
+	public Administrator getAdministrator() {
+		return administrator;
 	}
-	public void setUser(User user) {
-		this.user = user;
+	
+	public void setAdministrator(Administrator administrator) {
+		this.administrator = administrator;
 	}
+	
 	@NotNull
 	@OneToMany(mappedBy="thread")
 	public Collection<Comment> getComments() {
 		return comments;
 	}
+	
 	public void setComments(Collection<Comment> comments) {
 		this.comments = comments;
 	}
-	
-	
-	
 }

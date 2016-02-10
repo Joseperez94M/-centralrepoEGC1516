@@ -8,12 +8,14 @@
  * http://www.tdg-seville.info/License.html
  --%>
 
-<%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 
-<%@taglib prefix="jstl"	uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
@@ -25,59 +27,66 @@
 <spring:message code="customer.deliberations.edit" var="edit"></spring:message>
 
 
+<display:table name="hilo" id="row" requestURI="customer/seeThread.do"
+	pagesize="5" class="displaytag">
 
+	<display:column title="${date}">
+		<jstl:out value="${row.creationMoment }"></jstl:out>
+	</display:column>
 
-<display:table name="hilo" id="row"
-
-requestURI="customer/seeThread.do"
-pagesize="5" class="displaytag" >
-
-<display:column title="${date}"><jstl:out value="${row.creationMoment }"></jstl:out></display:column>
-
-<display:column title="${title}"><jstl:out value="${row.title }"></jstl:out></display:column>
-<display:column title="${text }"> <jstl:out value="${row.text }"></jstl:out></display:column>
-<display:column title="${edit }"><a href="customer/editThread.do?id=${row.id }">${edit }</a></display:column>
+	<display:column title="${title}">
+		<jstl:out value="${row.title }"></jstl:out>
+	</display:column>
+	<display:column title="${text }">
+		<jstl:out value="${row.text }"></jstl:out>
+	</display:column>
+	<security:authorize access="hasRole('ADMIN')">
+		<display:column title="${edit }">
+			<a href="customer/editThread.do?id=${row.id }">${edit }</a>
+		</display:column>
+	</security:authorize>
 
 </display:table>
 
-<h1><spring:message code="customer.header.comments" /> </h1>
+<h1>
+	<spring:message code="customer.header.comments" />
+</h1>
 <display:table name="comments" id="row"
+	requestURI="customer/seeThread.do" pagesize="5" class="displaytag">
 
-requestURI="customer/seeThread.do"
-pagesize="5" class="displaytag" >
+	<display:column title="${date}">
+		<jstl:out value="${row.creationMoment }"></jstl:out>
+	</display:column>
 
-<display:column title="${date}"><jstl:out value="${row.creationMoment }"></jstl:out></display:column>
-
-<display:column title="${author}"><jstl:out value="${row.user.name }"></jstl:out></display:column>
-<display:column title="${text }"> <jstl:out value="${row.text }"></jstl:out></display:column>
-<jstl:if test="${principal.getComments.containts(row)}">
-<display:column>
+	<display:column title="${author}">
+		<jstl:out value="${row.user.name }"></jstl:out>
+	</display:column>
+	<display:column title="${text }">
+		<jstl:out value="${row.text }"></jstl:out>
+	</display:column>
+	<jstl:if test="${principal.getComments.containts(row)}">
+		<display:column>
 			<a href="comment/customer/edit.do?id=${row.id}"><spring:message
 					code="comment.edit" /></a>
-</display:column>
-</jstl:if>
-
-
-
-
+		</display:column>
+	</jstl:if>
 
 </display:table>
 
 
-<form:form action="customer/saveComment.do" method="post" modelAttribute="comment">
+<form:form action="customer/saveComment.do" method="post"
+	modelAttribute="comment">
 
-<form:hidden path="id"/>
-<form:hidden path="version"/>	
-<form:hidden path="user"/>
-<form:hidden path="creationMoment" />
-<form:hidden path="thread"/>
+	<form:hidden path="id" />
+	<form:hidden path="version" />
+	<form:hidden path="user" />
+	<form:hidden path="creationMoment" />
+	<form:hidden path="thread" />
 
+	<acme:textarea code="customer.deliberations.text" path="text" />
 
-<acme:textbox code="customer.deliberations.text" path="text"/>
-<acme:submit name="save" code="customer.submit"/>
+	<br>
 
-
-
-
+	<acme:submit name="save" code="customer.submit" />
 
 </form:form>

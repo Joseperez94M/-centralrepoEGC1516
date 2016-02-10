@@ -1,77 +1,69 @@
-
 package domain;
+
 import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.SafeHtml;
+
 @Entity
 @Access(AccessType.PROPERTY)
-public class User extends Actor{
-	
-	
-	
-	private boolean banned;
-	
+public class User extends Actor {
+
 	private int numberOfMessages;
 	private String url;
-	
-	
-	
-	@NotNull
-	
-	public boolean isBanned() {
-		return banned;
+
+	// Constructor
+	public User() {
+		super();
 	}
-	public void setBanned(boolean banned) {
-		this.banned = banned;
-	}
-	
+
 	public int getNumberOfMessages() {
 		return numberOfMessages;
 	}
+
 	public void setNumberOfMessages(int numberOfMessages) {
 		this.numberOfMessages = numberOfMessages;
 	}
+
 	@SafeHtml
 	public String getUrl() {
 		return url;
 	}
+
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	
-	
-	
-	
-	//relationShips
-	
-	
-	Collection<Comment> comments;
-	Collection<Hilo> threads;
-	
+
+	// relationShips
+
+	private Collection<Comment> comments;
+
+	private Ban ban;
+
 	@NotNull
-	@OneToMany(mappedBy="user")
+	@OneToMany(mappedBy = "user")
 	public Collection<Comment> getComments() {
 		return comments;
 	}
+
 	public void setComments(Collection<Comment> comments) {
 		this.comments = comments;
 	}
+
 	@NotNull
-	@OneToMany(mappedBy="user")
-	public Collection<Hilo> getThreads() {
-		return threads;
+	@OneToOne(optional = false)
+	public Ban getBan() {
+		return ban;
 	}
-	public void setThreads(Collection<Hilo> threads) {
-		this.threads = threads;
+
+	public void setBan(Ban ban) {
+		this.ban = ban;
 	}
-	
-	
-	
-	
+
 }

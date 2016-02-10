@@ -1,21 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- 
- * PopulateDatabase.xml
- *
- * Copyright (C) 2014 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
- * http://www.tdg-seville.info/License.html
- -->
+<!-- * PopulateDatabase.xml * * Copyright (C) 2014 Universidad de Sevilla 
+	* * The use of this project is hereby constrained to the conditions of the 
+	* TDG Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	">
-	
+
 	<!-- User accounts -->
 
 	<bean id="userAccount1" class="security.UserAccount">
@@ -56,61 +50,69 @@
 			</list>
 		</property>
 	</bean>
-	
-	<!-- Other domain beans come here -->	
-	
+
+	<!-- Other domain beans come here -->
+
 	<bean id="user1" class="domain.User">
-		
-		<property name="name" value="nombre"/>
-		<property name="surname" value="surname"/>
-		<property name="email" value="caballeroalba@gmail.com"/>
-		<property name="location" value="sevilla"/>
+
+		<property name="name" value="nombre" />
+		<property name="surname" value="surname" />
+		<property name="email" value="caballeroalba@gmail.com" />
+		<property name="location" value="sevilla" />
 		<property name="userAccount" ref="userAccount2" />
-		<property name="banned" value="false"/>
-		<property name="numberOfMessages" value="0"/>
-		<property name="url" value="www.google.es"/>
+		<property name="banned" value="false" />
+		<property name="numberOfMessages" value="0" />
+		<property name="url" value="www.google.es" />
 		<property name="threads">
-		<list>
-		
-		
-		</list>
-		
-		
+			<list>
+
+
+			</list>
+
+
 		</property>
-		
+
 		<property name="comments">
-		<list>
-		
-		
-		</list>
-		
-		
+			<list>
+
+
+			</list>
+
+
 		</property>
 
 	</bean>
+
+
 	
-	
-	<bean id="thread1" class="domain.Hilo">
-	<property name="user" ref="user1"></property>
-	<property name="creationMoment" value="11/11/2004 12:12"></property>
-	<property name="title" value="titulo"></property>
-	<property name="text" value="text"></property>
-	<property name="comments">
-	
-	<list>
-	
-	
-	</list>
-	</property>
-	
-	
+
+	<bean id="thread1" class="domain.Thread">
+		<property name="title" value="titulo" />
+		<property name="creationMoment" value="11/11/2004 12:12" />
+		<property name="text" value="text" />
+		<property name="censusId" value="0" />
+		<property name="user" ref="user1" />
+		<property name="comments">
+			<list>
+			</list>
+		</property>
 	</bean>
-	
-	
-	
-	
-	
-	
+
+
+	<bean id="comment1" class="domain.Comment">
+		<property name="text" value="text" />
+		<property name="creationMoment" value="10/10/2015 15:35" />
+		<property name="user" ref="user1" />
+		<property name="thread" ref="thread1" />
+	</bean>
+
+	<bean id="admin1" class="domain.Administrator">
+		<property name="name" value="Name" />
+		<property name="surname" value="Surname" />
+		<property name="email" value="mail@example.com" />
+		<property name="location" value="Location1" />
+		<property name="userAccount" ref="userAccount1" />
+	</bean>
 	
 	
 </beans>

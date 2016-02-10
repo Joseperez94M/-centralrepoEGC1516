@@ -24,8 +24,9 @@
 			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
 				<ul>
 					<li class="arrow"></li>
-						
-						
+					<li><a href="administrator/list.do"><spring:message code="master.page.administrator.list" /></a></li>
+					<li><a href="administrator/createThread.do"><spring:message code="master.page.administrator.createThread" /></a></li>
+						<li><a href="customer/listThreads.do"><spring:message code="master.page.customer.listThreads" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>
@@ -35,8 +36,8 @@
 				<ul>
 					<li class="arrow"></li>
 					
-					<li><a href="customer/listThreads.do"><spring:message code="master.page.customer.listThreads" /></a></li>		
-					<li><a href="customer/createThread.do"><spring:message code="master.page.customer.createThread" /></a></li>		
+					<li><a href="customer/listThreads.do"><spring:message code="master.page.customer.listThreads" /></a></li>			
+					<li><a href="comment/customer/list.do"><spring:message code="master.page.customer.listComment" /></a></li>	
 										
 				</ul>
 			</li>

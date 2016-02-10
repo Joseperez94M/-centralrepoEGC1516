@@ -28,10 +28,10 @@
 	<form:label path="text">
 		<spring:message code="comment.text" />
 	</form:label>
-	<form:input path="text" />
+	<form:textarea path="text" />
 	<form:errors cssClass="error" path="text" />
 	<br />
-
+	<br>
 
 	<input type="submit" name="save"
 		value="<spring:message code="comment.save" />" />
@@ -44,7 +44,7 @@
 	</jstl:if>
 	<input type="button" name="cancel"
 		value="<spring:message code="comment.cancel" />"
-		onclick="javascript: window.location.replace('customer/listThreads.do')" />
+		onclick="javascript: window.location.replace('comment/customer/list.do')" />
 	<br />
 
 </form:form>
